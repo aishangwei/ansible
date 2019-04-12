@@ -1,0 +1,16 @@
+---
+
+- name: install the zabbix repo packages
+  yum:
+    name: "{{ repo_packages }}"
+    state: "installed"
+
+- name: install the zabbix agent
+  yum:
+    name: "{{ zabbix_agent_packages }}" 
+
+- name: copy zabbix_agentd.conf to /etc/zabbix/
+  template:
+    src: "zabbix_agentd.conf.j2"
+    dest: "/etc/zabbix/zabbix_agentd.conf"
+  notify: "restart zabbix-agent"
